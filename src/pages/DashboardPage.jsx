@@ -7,7 +7,7 @@ import {
   LayoutDashboard, User, Globe, TrendingUp, Star, Settings, FileText,
   Bell, ChevronRight, ArrowRight, Zap, Menu,
   CheckCircle2, Clock, MapPin, Briefcase, GraduationCap,
-  LogOut, X
+  LogOut, X, HelpCircle, Info, ChevronDown, ChevronUp, Wallet, BarChart2
 } from 'lucide-react'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -51,7 +51,7 @@ function DashboardHome({ navigate, user, formData, setActivePage }) {
         {[
           { label: 'Pathways Generated', value: '3', sub: 'Top matches for you' },
           { label: 'Profile Completion', value: '72%', sub: '3 sections left' },
-          { label: 'Countries Evaluated', value: '15', sub: 'Across 8 paths' },
+          { label: 'Countries Evaluated', value: '15', sub: 'Multiple paths' },
           { label: 'Applications', value: '0', sub: 'Start applying' },
         ].map(s => (
           <div key={s.label} className="card p-5">
@@ -67,8 +67,8 @@ function DashboardHome({ navigate, user, formData, setActivePage }) {
         <div className="lg:col-span-2 card p-6">
           <div className="flex items-center justify-between mb-5">
             <h2 className="font-display font-semibold text-navy-900">Your Top Pathways</h2>
-            <button onClick={() => navigate('/results')} className="text-xs text-navy-500 hover:text-navy-800 flex items-center gap-1 font-body transition-colors">
-              Full report <ArrowRight size={12} />
+            <button onClick={() => setActivePage('pathways')} className="text-xs text-navy-500 hover:text-navy-800 flex items-center gap-1 font-body transition-colors">
+              See all <ArrowRight size={12} />
             </button>
           </div>
           <div className="space-y-1">
@@ -93,8 +93,8 @@ function DashboardHome({ navigate, user, formData, setActivePage }) {
               </button>
             ))}
           </div>
-          <button onClick={() => navigate('/results')} className="mt-5 btn-primary w-full text-sm py-3 flex items-center justify-center gap-2">
-            View Full Report <ArrowRight size={15} />
+          <button onClick={() => setActivePage('pathways')} className="mt-5 btn-primary w-full text-sm py-3 flex items-center justify-center gap-2">
+            View My Pathways <ArrowRight size={15} />
           </button>
         </div>
 
@@ -102,24 +102,7 @@ function DashboardHome({ navigate, user, formData, setActivePage }) {
         <div className="card p-6">
           <h2 className="font-display font-semibold text-navy-900 mb-4">Quick Actions</h2>
           <div className="space-y-1">
-            {[
-              { icon: Zap, label: 'Re-run Analysis', sub: 'Update preferences', action: () => navigate('/onboarding'), accent: 'text-gold-500 bg-gold-400/10' },
-              { icon: User, label: 'Complete Profile', sub: '3 sections left', action: () => setActivePage('profile'), accent: 'text-navy-600 bg-navy-50' },
-              { icon: Globe, label: 'Explore Countries', sub: 'Compare destinations', action: () => setActivePage('pathways'), accent: 'text-blue-600 bg-blue-50' },
-              { icon: FileText, label: 'Start Application', sub: 'Apply for path #1', action: () => {}, accent: 'text-green-600 bg-green-50' },
-            ].map(a => (
-              <button key={a.label} onClick={a.action}
-                className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-all text-left group">
-                <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${a.accent}`}>
-                  <a.icon size={14} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs font-semibold text-navy-800 font-body">{a.label}</p>
-                  <p className="text-xs text-navy-400 font-body">{a.sub}</p>
-                </div>
-                <ChevronRight size={12} className="text-gray-200 group-hover:text-navy-400 transition-colors" />
-              </button>
-            ))}
+            {/* Reserved for future features */}
           </div>
         </div>
       </div>
@@ -152,8 +135,164 @@ function DashboardHome({ navigate, user, formData, setActivePage }) {
 // ─────────────────────────────────────────────────────────────────────────────
 // Pathways sub-page
 // ─────────────────────────────────────────────────────────────────────────────
+const METRIC_INFO = {
+  ROI: {
+    title: 'Return on Investment (ROI)',
+    description: 'The percentage gain on your total investment over the pathway duration. A 340% ROI means for every ₹1 you spend, you get ₹3.40 back in additional lifetime earnings.',
+    color: 'text-green-600',
+    bg: 'bg-green-50',
+    border: 'border-green-200',
+  },
+  NPV: {
+    title: 'Net Present Value (NPV)',
+    description: 'The total value of all future earnings from this pathway, discounted to today\'s money. A higher NPV means more real wealth created.',
+    color: 'text-blue-600',
+    bg: 'bg-blue-50',
+    border: 'border-blue-200',
+  },
+  Timeline: {
+    title: 'Time to Get There',
+    description: 'How long until you are fully set up and earning in this pathway, including study duration, visa processing, and settling-in period.',
+    color: 'text-purple-600',
+    bg: 'bg-purple-50',
+    border: 'border-purple-200',
+  },
+  Cost: {
+    title: 'Total Upfront Cost',
+    description: 'Your estimated all-in cost: tuition fees, visa applications, travel, initial living expenses, and setup costs.',
+    color: 'text-yellow-600',
+    bg: 'bg-yellow-50',
+    border: 'border-yellow-200',
+  },
+}
+
+const ALT_DETAILS = {
+  'Netherlands': {
+    costOfLiving: '~₹1.1L/mo', avgSalary: '₹55-80L/yr', jobMarket: 'Very Strong',
+    visa: 'Highly Skilled Migrant', visaTime: '2-4 weeks', happinessIndex: '7.8/10',
+    description: 'The Netherlands has a booming tech sector centered in Amsterdam and Eindhoven. English is widely spoken.',
+  },
+  'Canada': {
+    costOfLiving: '~₹1.3L/mo', avgSalary: '₹60-95L/yr', jobMarket: 'Strong',
+    visa: 'Express Entry / Study Permit', visaTime: '3-6 months', happinessIndex: '7.6/10',
+    description: 'Canada\'s Express Entry system is one of the most accessible skilled-worker immigration paths.',
+  },
+  'Ireland': {
+    costOfLiving: '~₹1.2L/mo', avgSalary: '₹55-85L/yr', jobMarket: 'Strong',
+    visa: 'Critical Skills Work Permit', visaTime: '4-8 weeks', happinessIndex: '7.3/10',
+    description: 'Ireland is home to European HQs of Google, Meta, and Apple. English-speaking, EU-based.',
+  },
+  'India': {
+    costOfLiving: '~₹35-60K/mo', avgSalary: '₹12-40L/yr', jobMarket: 'Competitive',
+    visa: 'N/A (local)', visaTime: 'Immediate', happinessIndex: '4.4/10',
+    description: 'India\'s domestic tech sector is growing rapidly with major hubs in Bengaluru, Hyderabad, and Pune.',
+  },
+  'Australia': {
+    costOfLiving: '~₹1.4L/mo', avgSalary: '₹65-100L/yr', jobMarket: 'Strong',
+    visa: 'Skilled Independent (189)', visaTime: '6-12 months', happinessIndex: '7.3/10',
+    description: 'Australia\'s points-based immigration rewards tech professionals. Sydney and Melbourne have thriving tech scenes.',
+  },
+  'UK': {
+    costOfLiving: '~₹1.5L/mo', avgSalary: '₹60-90L/yr', jobMarket: 'Strong',
+    visa: 'Skilled Worker Visa', visaTime: '3-8 weeks', happinessIndex: '7.1/10',
+    description: 'London is one of Europe\'s top tech and fintech hubs. Strong demand for product, engineering, and data roles.',
+  },
+  'Singapore': {
+    costOfLiving: '~₹1.6L/mo', avgSalary: '₹70-110L/yr', jobMarket: 'Very Strong',
+    visa: 'Employment Pass', visaTime: '3-8 weeks', happinessIndex: '6.8/10',
+    description: 'Singapore is Asia\'s financial and tech capital. Low taxes, world-class infrastructure.',
+  },
+}
+
+function MetricInfoButton({ label, value, info }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className={`w-full text-center rounded-xl p-3 transition-all border-2 group
+          ${open ? `${info.bg} ${info.border}` : 'bg-gray-50 border-transparent hover:border-gray-200'}`}
+      >
+        <p className="text-xs text-navy-400 font-body mb-0.5 flex items-center justify-center gap-1">
+          {label}
+          <Info size={10} className={`transition-colors ${open ? info.color : 'text-gray-300 group-hover:text-navy-400'}`} />
+        </p>
+        <p className={`font-display font-bold text-sm transition-colors ${open ? info.color : 'text-navy-900'}`}>{value}</p>
+      </button>
+      {open && (
+        <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 z-30 w-64 rounded-2xl border shadow-xl p-4 ${info.bg} ${info.border}`}>
+          <div className="flex items-start justify-between gap-2 mb-2">
+            <p className={`text-xs font-bold font-display ${info.color}`}>{info.title}</p>
+            <button onClick={(e) => { e.stopPropagation(); setOpen(false) }} className="text-gray-400 hover:text-gray-600 flex-shrink-0">
+              <X size={12} />
+            </button>
+          </div>
+          <p className="text-xs text-navy-600 font-body leading-relaxed">{info.description}</p>
+          <div className={`absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rotate-45 border-l border-t ${info.border} ${info.bg}`}></div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function AltCard({ alt, index, isOpen, onToggle }) {
+  const country = alt.split(' · ')[0]
+  const details = ALT_DETAILS[country]
+  return (
+    <div className={`rounded-xl border-2 transition-all duration-200 overflow-hidden
+      ${isOpen ? 'border-navy-300 bg-white shadow-sm' : 'border-transparent bg-gray-50 hover:border-navy-100 hover:bg-white'}`}>
+      <button type="button" className="w-full flex items-center justify-between py-3 px-4 text-left" onClick={onToggle}>
+        <div className="flex items-center gap-3">
+          <span className="text-xs font-bold text-navy-400 font-display w-4">{index + 1}</span>
+          <div>
+            <p className="text-sm font-semibold text-navy-800 font-body">{alt}</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <span className="text-navy-300">{isOpen ? <ChevronUp size={13} /> : <ChevronDown size={13} />}</span>
+        </div>
+      </button>
+      {isOpen && (
+        <div className="px-4 pb-4 border-t border-gray-100">
+          {details ? (
+            <>
+              <div className="grid grid-cols-2 gap-2 my-3">
+                <div className="bg-gray-50 rounded-xl p-3">
+                  <p className="text-xs text-navy-400 font-body mb-1 flex items-center gap-1"><Wallet size={10} /> Cost of Living</p>
+                  <p className="font-display font-bold text-sm text-navy-900">{details.costOfLiving}</p>
+                </div>
+                <div className="bg-gray-50 rounded-xl p-3">
+                  <p className="text-xs text-navy-400 font-body mb-1 flex items-center gap-1"><BarChart2 size={10} /> Avg Salary</p>
+                  <p className="font-display font-bold text-sm text-navy-900">{details.avgSalary}</p>
+                </div>
+                <div className="bg-gray-50 rounded-xl p-3">
+                  <p className="text-xs text-navy-400 font-body mb-1 flex items-center gap-1"><Globe size={10} /> Visa Type</p>
+                  <p className="font-display font-bold text-xs text-navy-900">{details.visa}</p>
+                  <p className="text-xs text-navy-400 font-body">~{details.visaTime}</p>
+                </div>
+                <div className="bg-gray-50 rounded-xl p-3">
+                  <p className="text-xs text-navy-400 font-body mb-1 flex items-center gap-1"><Star size={10} /> Happiness Index</p>
+                  <p className="font-display font-bold text-sm text-navy-900">{details.happinessIndex}</p>
+                  <p className="text-xs text-navy-400 font-body">Job market: {details.jobMarket}</p>
+                </div>
+              </div>
+              <p className="text-xs text-navy-600 font-body leading-relaxed">{details.description}</p>
+            </>
+          ) : (
+            <p className="text-xs text-navy-500 font-body leading-relaxed pt-2">
+              {country} offers strong opportunities with competitive compensation and a clear path for skilled international workers.
+            </p>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
 function PathwaysPage({ navigate }) {
   const [expanded, setExpanded] = useState(1)
+  const [selectedAlt, setSelectedAlt] = useState(null)
 
   const pathways = [
     {
@@ -172,7 +311,7 @@ function PathwaysPage({ navigate }) {
       happiness: '6.4/10', safety: 'Moderate', wlb: 'Good',
       summary: 'Upskill with a part-time Master\'s or certification while continuing current employment. Lower risk, steady career growth.',
       alts: ['India · Product Manager · IIM · 83%', 'India · ML Engineer · Online · 80%', 'India · Tech Lead · No study · 77%'],
-      futurePath: 'After 2 years, you\'d be well-positioned to move abroad — especially Canada or Germany — with enhanced credentials and savings.',
+      futurePath: 'After 2 years, you would be well-positioned to move abroad, especially Canada or Germany, with enhanced credentials and savings.',
     },
     {
       rank: 3, category: 'Move Abroad', country: 'Canada', role: 'Product Manager',
@@ -190,7 +329,7 @@ function PathwaysPage({ navigate }) {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="font-display text-2xl font-bold text-navy-900">My Pathways</h1>
-          <p className="text-sm text-navy-500 font-body mt-0.5">8 options evaluated · Top 3 shown</p>
+          <p className="text-sm text-navy-500 font-body mt-0.5">Top pathways shown</p>
         </div>
         <button onClick={() => navigate('/onboarding')} className="btn-primary text-xs py-2.5 px-4 flex items-center gap-1.5">
           <Zap size={13} /> Re-analyse
@@ -224,10 +363,7 @@ function PathwaysPage({ navigate }) {
 
               <div className="grid grid-cols-4 gap-2 mb-4">
                 {[['ROI', p.roi], ['NPV', p.npv], ['Timeline', p.timeline], ['Cost', p.cost]].map(([l, v]) => (
-                  <div key={l} className="text-center bg-gray-50 rounded-xl p-2.5">
-                    <p className="text-xs text-navy-400 font-body">{l}</p>
-                    <p className="font-display font-bold text-xs text-navy-900 mt-0.5">{v}</p>
-                  </div>
+                  <MetricInfoButton key={l} label={l} value={v} info={METRIC_INFO[l]} />
                 ))}
               </div>
 
@@ -247,13 +383,16 @@ function PathwaysPage({ navigate }) {
                     ))}
                   </div>
                   <div>
-                    <p className="text-xs font-semibold text-navy-700 mb-2 font-body">3 Alternative Paths</p>
-                    <div className="space-y-1">
+                    <p className="text-xs font-semibold text-navy-700 mb-3 font-body">3 Alternative Paths</p>
+                    <div className="space-y-2">
                       {p.alts.map((a, i) => (
-                        <div key={i} className="flex items-center gap-2 py-2 border-b border-gray-50 last:border-0">
-                          <span className="text-xs font-bold text-navy-300 font-display w-4">{i + 1}</span>
-                          <p className="text-xs text-navy-700 font-body">{a}</p>
-                        </div>
+                        <AltCard
+                          key={i}
+                          alt={a}
+                          index={i}
+                          isOpen={selectedAlt === i}
+                          onToggle={() => setSelectedAlt(selectedAlt === i ? null : i)}
+                        />
                       ))}
                     </div>
                   </div>
@@ -291,8 +430,8 @@ function SettingsPage({ user, navigate }) {
         <h2 className="font-display font-semibold text-navy-800 text-sm">Account</h2>
         {[
           { label: 'Email address', sub: user?.email || 'Not set', action: 'Change' },
-          { label: 'Password', sub: 'Last changed —', action: 'Update' },
-          { label: 'Connected accounts', sub: 'Google — connected', action: 'Disconnect', danger: true },
+          { label: 'Password', sub: 'Last changed never', action: 'Update' },
+          { label: 'Connected accounts', sub: 'Google connected', action: 'Disconnect', danger: true },
         ].map(({ label, sub, action, danger }) => (
           <div key={label} className="flex items-center justify-between py-2.5 border-b border-gray-50 last:border-0">
             <div>
@@ -365,6 +504,7 @@ export default function DashboardPage() {
   const { user, formData } = useApp()
   const [activePage, setActivePage] = useState('home')
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [showNotifications, setShowNotifications] = useState(false)
 
   const name = user?.name || formData?.firstName || 'User'
   const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
@@ -373,11 +513,11 @@ export default function DashboardPage() {
 
   const renderPage = () => {
     switch (activePage) {
-      case 'home':     return <DashboardHome navigate={navigate} user={user} formData={formData} setActivePage={setActivePage} />
-      case 'profile':  return <ProfilePage />
+      case 'home': return <DashboardHome navigate={navigate} user={user} formData={formData} setActivePage={setActivePage} />
+      case 'profile': return <ProfilePage />
       case 'pathways': return <PathwaysPage navigate={navigate} />
       case 'settings': return <SettingsPage user={user} navigate={navigate} />
-      default:         return <DashboardHome navigate={navigate} user={user} formData={formData} setActivePage={setActivePage} />
+      default: return <DashboardHome navigate={navigate} user={user} formData={formData} setActivePage={setActivePage} />
     }
   }
 
@@ -397,17 +537,20 @@ export default function DashboardPage() {
             </button>
           ))}
           <div className="pt-2 border-t border-gray-50 mt-2">
-            {[
-              { icon: TrendingUp, label: 'Results Report', action: () => navigate('/results') },
-              { icon: FileText, label: 'Edit Preferences', action: () => navigate('/onboarding') },
-            ].map(({ icon: Icon, label, action }) => (
-              <button key={label} onClick={action}
-                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-500 hover:bg-gray-50 hover:text-navy-700 transition-all font-body">
-                <Icon size={16} />{label}
-              </button>
-            ))}
+            <button onClick={() => navigate('/onboarding')}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-500 hover:bg-gray-50 hover:text-navy-700 transition-all font-body">
+              <FileText size={16} /> Re-run Analysis
+            </button>
           </div>
         </nav>
+
+        {/* Need Help? */}
+        <div className="border-t border-gray-100 pt-4 mt-4">
+          <a href="mailto:support@globalpathways.ai"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-navy-600 hover:bg-navy-50 hover:text-navy-800 transition-all font-body">
+            <HelpCircle size={16} /> Need Help?
+          </a>
+        </div>
 
         {/* User chip */}
         <div className="border-t border-gray-100 pt-4 mt-4">
@@ -444,12 +587,21 @@ export default function DashboardPage() {
                 </button>
               ))}
               <div className="pt-2 border-t border-gray-50 mt-2">
-                <button onClick={() => { navigate('/results'); setSidebarOpen(false) }}
+                <button onClick={() => { navigate('/onboarding'); setSidebarOpen(false) }}
                   className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-500 hover:bg-gray-50 hover:text-navy-700 transition-all font-body">
-                  <TrendingUp size={16} /> Results Report
+                  <FileText size={16} /> Re-run Analysis
                 </button>
               </div>
             </nav>
+
+            {/* Need Help? */}
+            <div className="border-t border-gray-100 pt-4 mt-4 px-2">
+              <a href="mailto:support@globalpathways.ai"
+                className="w-full flex items-center gap-2 text-sm text-navy-600 hover:text-navy-800 transition-colors font-body">
+                <HelpCircle size={15} /> Need Help?
+              </a>
+            </div>
+
             <div className="border-t border-gray-100 pt-4 mt-4 px-2">
               <button onClick={() => navigate('/')} className="flex items-center gap-2 text-xs text-navy-400 hover:text-red-500 transition-colors font-body">
                 <LogOut size={13} /> Sign out
@@ -470,13 +622,22 @@ export default function DashboardPage() {
             <p className="font-display font-semibold text-navy-900">{pageLabel}</p>
           </div>
           <div className="flex items-center gap-2">
-            <button className="relative p-2 rounded-xl hover:bg-gray-100 transition-colors">
+            <button onClick={() => {
+              setShowNotifications(!showNotifications)
+            }} className="relative p-2 rounded-xl hover:bg-gray-100 transition-colors">
               <Bell size={17} className="text-navy-600" />
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-gold-400 rounded-full"></span>
             </button>
-            <button onClick={() => navigate('/results')} className="btn-primary text-xs py-2 px-4 flex items-center gap-1.5">
-              <Zap size={13} /> Results
-            </button>
+            {showNotifications && (
+              <div className="absolute right-4 top-14 w-72 bg-white rounded-xl shadow-xl border border-gray-100 z-50">
+                <div className="p-4 border-b border-gray-100">
+                  <h3 className="font-display font-semibold text-navy-900 text-sm">Notifications</h3>
+                </div>
+                <div className="p-4">
+                  <p className="text-xs text-navy-400 font-body text-center">No new notifications</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

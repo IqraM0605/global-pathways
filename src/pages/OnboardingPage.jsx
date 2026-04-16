@@ -54,10 +54,31 @@ const STEPS = [
   { id: 'review', label: 'Review', icon: CheckCircle2 },
 ]
 
-const COUNTRIES = ['India', 'United States', 'Canada', 'Germany', 'United Kingdom', 'Australia', 'Singapore', 'Netherlands', 'Ireland', 'New Zealand', 'UAE', 'Japan', 'France', 'Sweden', 'Denmark']
+const ALL_COUNTRIES = [
+  'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria',
+  'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan',
+  'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cabo Verde', 'Cambodia',
+  'Cameroon', 'Canada', 'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia', 'Comoros', 'Congo', 'Costa Rica',
+  'Croatia', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt',
+  'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Eswatini', 'Ethiopia', 'Fiji', 'Finland', 'France', 'Gabon',
+  'Gambia', 'Georgia', 'Germany', 'Ghana', 'Greece', 'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana',
+  'Haiti', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Israel',
+  'Italy', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Kosovo', 'Kuwait', 'Kyrgyzstan',
+  'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Madagascar',
+  'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania', 'Mauritius', 'Mexico', 'Micronesia',
+  'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar', 'Namibia', 'Nauru', 'Nepal',
+  'Netherlands', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'North Korea', 'North Macedonia', 'Norway', 'Oman', 'Pakistan',
+  'Palau', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Qatar',
+  'Romania', 'Russia', 'Rwanda', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines', 'Samoa', 'San Marino', 'Saudi Arabia', 'Senegal',
+  'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Korea',
+  'South Sudan', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan',
+  'Tanzania', 'Thailand', 'Timor-Leste', 'Togo', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Tuvalu',
+  'UAE', 'Uganda', 'Ukraine', 'United Kingdom', 'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City', 'Venezuela',
+  'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe'
+]
 const SKILLS_LIST = ['Python', 'Data Analysis', 'Project Management', 'Communication', 'Leadership', 'JavaScript', 'Machine Learning', 'Marketing', 'Finance', 'Product Management', 'Design', 'Research', 'Sales', 'Operations', 'HR', 'Writing', 'Java', 'SQL', 'Strategy', 'Business Development']
 const UNIVERSITIES = ['IIT Bombay', 'IIT Delhi', 'MIT', 'Stanford', 'Oxford', 'Cambridge', 'NUS Singapore', 'TU Munich', 'University of Toronto', 'University of Melbourne', 'ETH Zurich', 'Imperial College London']
-const LIFESTYLE_OPTS = ['Safety first (low crime)', 'High happiness index', 'Good work-life balance', 'Outdoor lifestyle', 'Urban city life', 'Close-knit community', 'Cultural diversity', 'English-speaking country', 'Warm climate', 'Social healthcare']
+const LIFESTYLE_OPTS = ['Safety first (low crime)', 'High happiness index', 'Good work-life balance', 'Outdoor lifestyle', 'Urban City', 'Cultural diversity', 'English-speaking country', 'Warm climate', 'Social healthcare', 'Networking', 'Public Transport']
 const PRIORITY_OPTIONS = [
   { id: 'preferred_country', label: 'Preferred Country' },
   { id: 'changing_career', label: 'Changing Careers' },
@@ -159,19 +180,19 @@ export default function OnboardingPage() {
                     <div className="grid grid-cols-2 gap-3 mb-4">
                       <div>
                         <label className="text-xs font-semibold text-navy-500 font-body">Degree</label>
-                        <input className="input-field mt-1" value={localData.educationalDetails?.degree || ''} onChange={e => set('educationalDetails', {...localData.educationalDetails, degree: e.target.value})} />
+                        <input className="input-field mt-1" value={localData.educationalDetails?.degree || ''} onChange={e => set('educationalDetails', { ...localData.educationalDetails, degree: e.target.value })} />
                       </div>
                       <div>
                         <label className="text-xs font-semibold text-navy-500 font-body">Field of Study</label>
-                        <input className="input-field mt-1" value={localData.educationalDetails?.field || ''} onChange={e => set('educationalDetails', {...localData.educationalDetails, field: e.target.value})} />
+                        <input className="input-field mt-1" value={localData.educationalDetails?.field || ''} onChange={e => set('educationalDetails', { ...localData.educationalDetails, field: e.target.value })} />
                       </div>
                       <div>
                         <label className="text-xs font-semibold text-navy-500 font-body">Institution</label>
-                        <input className="input-field mt-1" value={localData.educationalDetails?.institution || ''} onChange={e => set('educationalDetails', {...localData.educationalDetails, institution: e.target.value})} />
+                        <input className="input-field mt-1" value={localData.educationalDetails?.institution || ''} onChange={e => set('educationalDetails', { ...localData.educationalDetails, institution: e.target.value })} />
                       </div>
                       <div>
                         <label className="text-xs font-semibold text-navy-500 font-body">Graduation Year</label>
-                        <input className="input-field mt-1" value={localData.educationalDetails?.year || ''} onChange={e => set('educationalDetails', {...localData.educationalDetails, year: e.target.value})} />
+                        <input className="input-field mt-1" value={localData.educationalDetails?.year || ''} onChange={e => set('educationalDetails', { ...localData.educationalDetails, year: e.target.value })} />
                       </div>
                     </div>
                     <div>
@@ -207,20 +228,20 @@ export default function OnboardingPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-xs font-semibold text-navy-700 mb-1.5 block font-body">Highest Degree *</label>
-                  <select className="input-field" value={localData.educationalDetails?.degree || ''} onChange={e => set('educationalDetails', {...localData.educationalDetails, degree: e.target.value})}>
+                  <select className="input-field" value={localData.educationalDetails?.degree || ''} onChange={e => set('educationalDetails', { ...localData.educationalDetails, degree: e.target.value })}>
                     <option value="">Select degree</option>
                     {["High School", "Diploma", "Bachelor's", "Master's", "MBA", "PhD", "Other"].map(d => <option key={d}>{d}</option>)}
                   </select>
                 </div>
                 <div>
                   <label className="text-xs font-semibold text-navy-700 mb-1.5 block font-body">Field of Study *</label>
-                  <input className="input-field" placeholder="e.g. Computer Science" value={localData.educationalDetails?.field || ''} onChange={e => set('educationalDetails', {...localData.educationalDetails, field: e.target.value})} />
+                  <input className="input-field" placeholder="e.g. Computer Science" value={localData.educationalDetails?.field || ''} onChange={e => set('educationalDetails', { ...localData.educationalDetails, field: e.target.value })} />
                 </div>
               </div>
 
               <div>
                 <label className="text-xs font-semibold text-navy-700 mb-1.5 block font-body">Institution Name</label>
-                <input className="input-field" placeholder="e.g. IIT Bombay" value={localData.educationalDetails?.institution || ''} onChange={e => set('educationalDetails', {...localData.educationalDetails, institution: e.target.value})} />
+                <input className="input-field" placeholder="e.g. IIT Bombay" value={localData.educationalDetails?.institution || ''} onChange={e => set('educationalDetails', { ...localData.educationalDetails, institution: e.target.value })} />
               </div>
 
               <div>
@@ -234,11 +255,28 @@ export default function OnboardingPage() {
 
               <div>
                 <label className="text-xs font-semibold text-navy-700 mb-2 block font-body">Your Skills <span className="text-navy-400 font-normal">(select all that apply)</span></label>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 mb-2">
                   {SKILLS_LIST.map(s => (
                     <Tag key={s} label={s} selected={(localData.skills || []).includes(s)} onClick={() => toggleArray('skills', s)} />
                   ))}
+                  {(localData.skills || []).filter(s => !SKILLS_LIST.includes(s)).map(s => (
+                    <span key={s} className="tag-pill selected">
+                      {s} <button type="button" onClick={() => toggleArray('skills', s)}><X size={10} /></button>
+                    </span>
+                  ))}
                 </div>
+                <button
+                  type="button"
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl border-2 border-dashed border-navy-200 text-xs font-semibold text-navy-600 hover:border-navy-400 transition-all font-body"
+                  onClick={() => {
+                    const val = prompt('Enter a skill:')
+                    if (val && val.trim() && !(localData.skills || []).includes(val.trim())) {
+                      set('skills', [...(localData.skills || []), val.trim()])
+                    }
+                  }}
+                >
+                  <Plus size={12} /> Add New
+                </button>
               </div>
             </div>
           </div>
@@ -270,14 +308,14 @@ export default function OnboardingPage() {
               <div>
                 <label className="text-xs font-semibold text-navy-700 mb-2 block font-body">Prefer Work or Study? *</label>
                 <RadioGroup
-                  options={['Work only', 'Study only', 'Work + Study', 'Flexible']}
+                  options={['Work', 'Study', 'Work + Study', 'Flexible']}
                   value={localData.preferWorkOrStudy}
                   onChange={v => set('preferWorkOrStudy', v)}
                 />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-navy-700 mb-2 block font-body">Time Availability <span className="text-navy-400 font-normal">— how much time do you have to make this move?</span></label>
+                <label className="text-xs font-semibold text-navy-700 mb-2 block font-body">Time Availability <span className="text-navy-400 font-normal">(how much time do you have to make this move?)</span></label>
                 <RadioGroup
                   options={['< 6 months', '6–12 months', '1–2 years', '2–3 years', 'Flexible']}
                   value={localData.timeAvailability}
@@ -287,11 +325,44 @@ export default function OnboardingPage() {
 
               <div>
                 <label className="text-xs font-semibold text-navy-700 mb-2 block font-body">Preferred Universities <span className="text-navy-400 font-normal">(optional)</span></label>
-                <div className="flex flex-wrap gap-2">
-                  {UNIVERSITIES.map(u => (
-                    <Tag key={u} label={u} selected={(localData.preferredUniversities || []).includes(u)} onClick={() => toggleArray('preferredUniversities', u)} />
-                  ))}
+                <div className="flex gap-2 mb-2">
+                  <select
+                    className="input-field flex-1"
+                    onChange={e => {
+                      const val = e.target.value
+                      if (val && !(localData.preferredUniversities || []).includes(val)) {
+                        toggleArray('preferredUniversities', val)
+                      }
+                      e.target.value = ''
+                    }}
+                  >
+                    <option value="">Select a university…</option>
+                    {['IIT Bombay', 'IIT Delhi', 'IIM Ahmedabad', 'MIT', 'Stanford', 'Harvard', 'Oxford', 'Cambridge', 'NUS Singapore', 'TU Munich', 'University of Toronto', 'University of Melbourne', 'ETH Zurich', 'Imperial College London', 'University of Amsterdam', 'McGill University'].map(u => (
+                      <option key={u} value={u}>{u}</option>
+                    ))}
+                  </select>
+                  <button
+                    type="button"
+                    className="flex items-center gap-1 px-3 py-2 rounded-xl border-2 border-dashed border-navy-200 text-xs font-semibold text-navy-600 hover:border-navy-400 transition-all font-body whitespace-nowrap"
+                    onClick={() => {
+                      const val = prompt('Enter university name:')
+                      if (val && val.trim() && !(localData.preferredUniversities || []).includes(val.trim())) {
+                        toggleArray('preferredUniversities', val.trim())
+                      }
+                    }}
+                  >
+                    <Plus size={12} /> Add New
+                  </button>
                 </div>
+                {(localData.preferredUniversities || []).length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {(localData.preferredUniversities || []).map(u => (
+                      <span key={u} className="tag-pill selected">
+                        {u} <button type="button" onClick={() => toggleArray('preferredUniversities', u)}><X size={10} /></button>
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -316,21 +387,30 @@ export default function OnboardingPage() {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-navy-700 mb-2 block font-body">Current Financial Status *</label>
-                <RadioGroup
-                  options={['No savings', 'Some savings (<6 months)', 'Stable (6–12 months)', 'Good savings (1+ yr)', 'High income / investments']}
-                  value={localData.financialStatus}
-                  onChange={v => set('financialStatus', v)}
-                />
+                <label className="text-xs font-semibold text-navy-700 mb-2 block font-body">Current Savings *</label>
+                <select className="input-field" value={localData.financialStatus || ''} onChange={e => set('financialStatus', e.target.value)}>
+                  <option value="">Select savings range…</option>
+                  <option value="$0 – $1,000">$0 – $1,000 (No savings)</option>
+                  <option value="$1,000 – $5,000">$1,000 – $5,000 (Minimal)</option>
+                  <option value="$5,000 – $10,000">$5,000 – $10,000 (Some savings)</option>
+                  <option value="$10,000 – $25,000">$10,000 – $25,000 (Stable)</option>
+                  <option value="$25,000 – $50,000">$25,000 – $50,000 (Good savings)</option>
+                  <option value="$50,000 – $100,000">$50,000 – $100,000 (Strong savings)</option>
+                  <option value="$100,000+">$100,000+ (High savings / investments)</option>
+                </select>
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-navy-700 mb-2 block font-body">Loan Taking Capacity *</label>
-                <RadioGroup
-                  options={['No loan', 'Small loan OK', 'Moderate loan OK', 'Open to large loan']}
-                  value={localData.loanCapacity}
-                  onChange={v => set('loanCapacity', v)}
-                />
+                <label className="text-xs font-semibold text-navy-700 mb-2 block font-body">Loan Capacity *</label>
+                <select className="input-field" value={localData.loanCapacity || ''} onChange={e => set('loanCapacity', e.target.value)}>
+                  <option value="">Select loan range…</option>
+                  <option value="No loan">No loan ($0)</option>
+                  <option value="$0 – $10,000">$0 – $10,000 (Small loan)</option>
+                  <option value="$10,000 – $30,000">$10,000 – $30,000 (Moderate loan)</option>
+                  <option value="$30,000 – $60,000">$30,000 – $60,000 (Significant loan)</option>
+                  <option value="$60,000 – $100,000">$60,000 – $100,000 (Large loan)</option>
+                  <option value="$100,000+">$100,000+ (Open to large loan)</option>
+                </select>
               </div>
 
               <SliderField
@@ -371,12 +451,61 @@ export default function OnboardingPage() {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-navy-700 mb-2 block font-body">Family / Dependants Situation</label>
-                <RadioGroup
-                  options={['Single, no dependants', 'Single, with dependants', 'Partnered, no kids', 'Partnered, with kids', 'Other']}
-                  value={localData.familySituation}
-                  onChange={v => set('familySituation', v)}
-                />
+                <label className="text-xs font-semibold text-navy-700 mb-3 block font-body">Family & Dependants</label>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-xs text-navy-500 font-body mb-2">Marital Status</p>
+                    <RadioGroup
+                      options={['Single', 'Married']}
+                      value={localData.maritalStatus}
+                      onChange={v => set('maritalStatus', v)}
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-xs text-navy-500 font-body mb-2">Dependants under 18</p>
+                      <RadioGroup
+                        options={['No', 'Yes']}
+                        value={localData.dependantsUnder18 !== undefined ? (localData.dependantsUnder18 ? 'Yes' : 'No') : undefined}
+                        onChange={v => set('dependantsUnder18', v === 'Yes')}
+                      />
+                      {localData.dependantsUnder18 && (
+                        <input
+                          type="number" min="1" max="10"
+                          className="input-field mt-2"
+                          placeholder="How many?"
+                          value={localData.dependantsUnder18Count || ''}
+                          onChange={e => set('dependantsUnder18Count', e.target.value)}
+                        />
+                      )}
+                    </div>
+                    <div>
+                      <p className="text-xs text-navy-500 font-body mb-2">Dependants over 18</p>
+                      <RadioGroup
+                        options={['No', 'Yes']}
+                        value={localData.dependantsOver18 !== undefined ? (localData.dependantsOver18 ? 'Yes' : 'No') : undefined}
+                        onChange={v => set('dependantsOver18', v === 'Yes')}
+                      />
+                      {localData.dependantsOver18 && (
+                        <input
+                          type="number" min="1" max="10"
+                          className="input-field mt-2"
+                          placeholder="How many?"
+                          value={localData.dependantsOver18Count || ''}
+                          onChange={e => set('dependantsOver18Count', e.target.value)}
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs text-navy-500 font-body mb-2">Financial Dependency</p>
+                    <RadioGroup
+                      options={['Dependent', 'Not Dependent']}
+                      value={localData.financialDependency}
+                      onChange={v => set('financialDependency', v)}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -393,20 +522,32 @@ export default function OnboardingPage() {
             <div className="space-y-6">
               <div>
                 <label className="text-xs font-semibold text-navy-700 mb-2 block font-body">Preferred Countries <span className="text-navy-400 font-normal">(select up to 5)</span></label>
-                <div className="flex flex-wrap gap-2">
-                  {COUNTRIES.map(c => (
-                    <Tag key={c} label={c}
-                      selected={(localData.preferredCountries || []).includes(c)}
-                      onClick={() => {
-                        const arr = localData.preferredCountries || []
-                        if (arr.includes(c)) toggleArray('preferredCountries', c)
-                        else if (arr.length < 5) toggleArray('preferredCountries', c)
-                      }}
-                    />
-                  ))}
-                </div>
+                <select
+                  className="input-field mb-2"
+                  onChange={e => {
+                    const val = e.target.value
+                    if (!val) return
+                    const arr = localData.preferredCountries || []
+                    if (!arr.includes(val) && arr.length < 5) {
+                      set('preferredCountries', [...arr, val])
+                    }
+                    e.target.value = ''
+                  }}
+                >
+                  <option value="">Select a country…</option>
+                  {ALL_COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
                 {(localData.preferredCountries || []).length > 0 && (
-                  <p className="text-xs text-navy-400 mt-2 font-body">Selected: {localData.preferredCountries.join(', ')}</p>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {(localData.preferredCountries || []).map(c => (
+                      <span key={c} className="tag-pill selected">
+                        {c} <button type="button" onClick={() => set('preferredCountries', (localData.preferredCountries || []).filter(x => x !== c))}><X size={10} /></button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {(localData.preferredCountries || []).length >= 5 && (
+                  <p className="text-xs text-gold-600 font-body mt-1">Maximum 5 countries selected</p>
                 )}
               </div>
 
@@ -467,7 +608,7 @@ export default function OnboardingPage() {
               <span className={`font-semibold ${selected.length >= 3 ? 'text-green-600' : 'text-gold-500'}`}>
                 {selected.length} / 5 selected
               </span>
-              {selected.length < 3 && <span className="text-navy-400"> — please select at least 3</span>}
+              {selected.length < 3 && <span className="text-navy-400"> (please select at least 3)</span>}
             </p>
           </div>
         )
@@ -481,6 +622,16 @@ export default function OnboardingPage() {
             <p className="text-navy-500 text-sm mb-8 font-body">Everything looks right? Click <em>Generate My Pathways</em> to see your top 3 results.</p>
 
             <div className="space-y-3">
+              {localData.resumeFile && (
+                <div className="mb-4 bg-navy-50 border border-navy-100 rounded-xl p-4 flex items-center gap-3">
+                  <FileText size={18} className="text-navy-600 flex-shrink-0" />
+                  <div>
+                    <p className="text-xs font-semibold text-navy-700 font-body">Resume uploaded</p>
+                    <p className="text-xs text-navy-400 font-body">{localData.resumeFile}</p>
+                  </div>
+                  <CheckCircle2 size={16} className="text-green-500 ml-auto flex-shrink-0" />
+                </div>
+              )}
               {[
                 { label: 'Name', value: `${localData.firstName} ${localData.lastName}` },
                 { label: 'Email', value: localData.email },
@@ -501,13 +652,6 @@ export default function OnboardingPage() {
                   <span className="text-sm text-navy-800 font-medium font-body text-right flex-1">{value || '—'}</span>
                 </div>
               ))}
-            </div>
-
-            <div className="mt-6 bg-navy-50 rounded-xl p-4 flex items-start gap-3">
-              <CheckCircle2 size={18} className="text-navy-600 flex-shrink-0 mt-0.5" />
-              <p className="text-xs text-navy-600 font-body leading-relaxed">
-                Your data is used only to generate your personalised pathways. We evaluate all 8 stay local + move abroad options and surface your top 3.
-              </p>
             </div>
           </div>
         )

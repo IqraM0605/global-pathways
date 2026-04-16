@@ -12,7 +12,7 @@ const steps = [
 const features = [
   { icon: Globe, title: 'Country-aware', desc: 'Auto-detects your location. Evaluates real happiness index, crime rates, and cost of living data.' },
   { icon: TrendingUp, title: 'Financial modelling', desc: 'ROI and NPV calculations for each pathway based on your actual financial situation and goals.' },
-  { icon: Shield, title: 'Risk calibrated', desc: 'Paths ranked by your personal risk tolerance — from safe, steady to bold career pivots.' },
+  { icon: Shield, title: 'Risk calibrated', desc: 'Paths ranked by your personal risk tolerance, from safe and steady to bold career pivots.' },
   { icon: Star, title: 'Skills-first matching', desc: 'Your transferable skills unlock career options you haven\'t considered yet.' },
 ]
 
@@ -39,7 +39,7 @@ export default function LandingPage() {
                 like a <span className="text-gold-400 animate-text-reveal">gamble.</span>
               </h1>
               <p className="text-lg text-navy-500 leading-relaxed mb-8 max-w-lg font-body stagger-item animate-blur-in-up">
-                We guide you through data-backed insights and personalised recommendations — whether you stay local or move abroad.
+                We guide you through data-backed insights and personalised recommendations, whether you stay local or move abroad.
               </p>
               <div className="flex flex-wrap gap-3 stagger-item">
                 <button onClick={() => navigate('/auth?mode=signup')} className="btn-gold flex items-center gap-2 text-base px-7 py-3.5 hover:animate-smooth-bounce">
@@ -84,7 +84,7 @@ export default function LandingPage() {
                 ))}
 
                 <div className="mt-4 pt-4 border-t border-navy-700 flex items-center justify-between">
-                  <span className="text-xs text-navy-400 font-body">8 options evaluated</span>
+                  <span className="text-xs text-navy-400 font-body">Multiple options evaluated</span>
                   <button className="flex items-center gap-1 text-xs text-gold-400 font-semibold font-body hover:text-gold-300 transition-colors">
                     View full report <ChevronRight size={14} />
                   </button>

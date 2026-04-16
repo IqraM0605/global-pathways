@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useApp } from '../context/AppContext'
 import Logo from './Logo'
 import { Menu, X } from 'lucide-react'
 
 export default function Navbar() {
   const navigate = useNavigate()
   const location = useLocation()
+  const { user } = useApp()
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+
+  const handleCareers = () => {
+    if (user) {
+      navigate('/careers')
+    } else {
+      navigate('/auth?mode=login&redirect=/careers')
+    }
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
@@ -28,6 +38,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-8">
           <a href="#how" className="text-sm font-medium text-navy-600 hover:text-navy-900 transition-colors font-body">How it works</a>
           <a href="#about" className="text-sm font-medium text-navy-600 hover:text-navy-900 transition-colors font-body">About</a>
+          <button onClick={handleCareers} className="text-sm font-medium text-navy-600 hover:text-navy-900 transition-colors font-body">Careers</button>
           <button
             onClick={() => navigate('/auth?mode=login')}
             className="text-sm font-semibold text-navy-800 hover:text-navy-600 transition-colors font-body"
@@ -53,6 +64,7 @@ export default function Navbar() {
         <div className="md:hidden bg-white border-t border-gray-100 px-6 py-4 flex flex-col gap-4">
           <a href="#how" className="text-sm font-medium text-navy-700 font-body" onClick={() => setMobileOpen(false)}>How it works</a>
           <a href="#about" className="text-sm font-medium text-navy-700 font-body" onClick={() => setMobileOpen(false)}>About</a>
+          <button onClick={() => { handleCareers(); setMobileOpen(false) }} className="text-sm font-medium text-navy-700 text-left font-body">Careers</button>
           <button onClick={() => { navigate('/auth?mode=login'); setMobileOpen(false) }} className="text-sm font-semibold text-navy-800 text-left font-body">Log in</button>
           <button onClick={() => { navigate('/auth?mode=signup'); setMobileOpen(false) }} className="btn-primary text-sm text-center">Get Started</button>
         </div>

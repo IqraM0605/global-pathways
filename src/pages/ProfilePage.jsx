@@ -35,7 +35,7 @@ function FieldRow({ label, value, editing, onChange, type = 'text', options = nu
           />
         )
       ) : (
-        <span className="text-sm text-navy-800 font-body flex-1">{value || <span className="text-gray-300">—</span>}</span>
+        <span className="text-sm text-navy-800 font-body flex-1">{value || <span className="text-gray-300">Not provided</span>}</span>
       )}
     </div>
   )
@@ -120,7 +120,7 @@ export default function ProfilePage({ onBack }) {
           </div>
           <div>
             <h2 className="font-display font-bold text-xl text-navy-900">{name}</h2>
-            <p className="text-sm text-navy-500 font-body">{local.email || user?.email || '—'}</p>
+            <p className="text-sm text-navy-500 font-body">{local.email || user?.email || 'Not provided'}</p>
             <div className="flex items-center gap-2 mt-1">
               <span className="text-xs font-medium bg-navy-50 text-navy-600 px-2.5 py-0.5 rounded-full font-body">
                 {local.country || 'Country not set'}
@@ -143,7 +143,7 @@ export default function ProfilePage({ onBack }) {
           <FieldRow label="First Name" value={local.firstName} editing={editing} onChange={v => set('firstName', v)} />
           <FieldRow label="Last Name" value={local.lastName} editing={editing} onChange={v => set('lastName', v)} />
           <FieldRow label="Email" value={local.email} editing={editing} onChange={v => set('email', v)} type="email" />
-          <FieldRow label="Mobile" value={`${local.countryCode || ''} ${local.mobile || ''}`.trim()} editing={false} onChange={() => {}} />
+          <FieldRow label="Mobile" value={`${local.countryCode || ''} ${local.mobile || ''}`.trim()} editing={false} onChange={() => { }} />
           <FieldRow label="Date of Birth" value={local.dob} editing={editing} onChange={v => set('dob', v)} type="date" />
           <FieldRow label="Country" value={local.country} editing={editing} onChange={v => set('country', v)} />
         </div>
