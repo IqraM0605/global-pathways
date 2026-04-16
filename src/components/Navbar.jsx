@@ -12,11 +12,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   const handleCareers = () => {
-    if (user) {
-      navigate('/careers')
-    } else {
-      navigate('/auth?mode=login&redirect=/careers')
-    }
+    navigate('/careers')
   }
 
   useEffect(() => {

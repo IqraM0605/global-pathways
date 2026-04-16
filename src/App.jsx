@@ -24,11 +24,7 @@ export default function App() {
           <Route path="/onboarding" element={<OnboardingPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/results" element={<ResultsPage />} />
-          <Route path="/careers" element={             // 👇 wrap this
-            <ProtectedRoute>
-              <CareersPage />
-            </ProtectedRoute>
-          } />
+          <Route path="/careers" element={<CareersPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
