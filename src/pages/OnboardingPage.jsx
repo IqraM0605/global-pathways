@@ -88,6 +88,7 @@ const PRIORITY_OPTIONS = [
   { id: 'financial_goals', label: 'Financial Goals (ROI / NPV)' },
   { id: 'time_budget', label: 'Staying in My Timeline' },
   { id: 'financial_budget', label: 'Staying in My Financial Budget' },
+  { id: 'lifestyle_preferences', label: 'Lifestyle Preferences' },
 ]
 
 export default function OnboardingPage() {
@@ -153,7 +154,7 @@ export default function OnboardingPage() {
               >
                 <Upload size={36} className="text-navy-300 mx-auto mb-4" />
                 <p className="font-semibold text-navy-700 font-display mb-1">Drop your resume here</p>
-                <p className="text-sm text-navy-400 font-body">or click to browse · PDF, DOC, DOCX</p>
+                <p className="text-sm text-navy-400 font-body">or click to browse — PDF, DOC, DOCX</p>
                 <input ref={fileRef} type="file" accept=".pdf,.doc,.docx" className="hidden"
                   onChange={e => handleResumeUpload(e.target.files[0])} />
               </div>
@@ -299,7 +300,7 @@ export default function OnboardingPage() {
               <div>
                 <label className="text-xs font-semibold text-navy-700 mb-2 block font-body">Preferred Career Direction *</label>
                 <RadioGroup
-                  options={['Stay in current career', 'Transition to new career', 'Upskill in current field', 'Complete career pivot']}
+                  options={['Stay in current career', 'Transition to new career', 'Upskill in current field', 'Complete career pivot', 'Flexible']}
                   value={localData.preferredCareer}
                   onChange={v => set('preferredCareer', v)}
                 />
@@ -398,6 +399,7 @@ export default function OnboardingPage() {
                   <option value="$50,000 – $100,000">$50,000 – $100,000 (Strong savings)</option>
                   <option value="$100,000+">$100,000+ (High savings / investments)</option>
                 </select>
+                <p className="text-xs text-navy-400 font-body mt-1.5">All currencies are in USD</p>
               </div>
 
               <div>
@@ -411,6 +413,15 @@ export default function OnboardingPage() {
                   <option value="$60,000 – $100,000">$60,000 – $100,000 (Large loan)</option>
                   <option value="$100,000+">$100,000+ (Open to large loan)</option>
                 </select>
+              </div>
+
+              <div>
+                <label className="text-xs font-semibold text-navy-700 mb-2 block font-body">Preferred Loan Lenders <span className="text-navy-400 font-normal">(optional)</span></label>
+                <div className="flex flex-wrap gap-2">
+                  {['Bank Loan', 'NBFC', 'Government Scheme', 'Private Lender', 'Family/Friends', 'Not Sure Yet'].map(lender => (
+                    <Tag key={lender} label={lender} selected={(localData.loanLenders || []).includes(lender)} onClick={() => toggleArray('loanLenders', lender)} />
+                  ))}
+                </div>
               </div>
 
               <SliderField
@@ -447,64 +458,6 @@ export default function OnboardingPage() {
                   {LIFESTYLE_OPTS.map(l => (
                     <Tag key={l} label={l} selected={(localData.lifestyle || []).includes(l)} onClick={() => toggleArray('lifestyle', l)} />
                   ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="text-xs font-semibold text-navy-700 mb-3 block font-body">Family & Dependants</label>
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-xs text-navy-500 font-body mb-2">Marital Status</p>
-                    <RadioGroup
-                      options={['Single', 'Married']}
-                      value={localData.maritalStatus}
-                      onChange={v => set('maritalStatus', v)}
-                    />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-xs text-navy-500 font-body mb-2">Dependants under 18</p>
-                      <RadioGroup
-                        options={['No', 'Yes']}
-                        value={localData.dependantsUnder18 !== undefined ? (localData.dependantsUnder18 ? 'Yes' : 'No') : undefined}
-                        onChange={v => set('dependantsUnder18', v === 'Yes')}
-                      />
-                      {localData.dependantsUnder18 && (
-                        <input
-                          type="number" min="1" max="10"
-                          className="input-field mt-2"
-                          placeholder="How many?"
-                          value={localData.dependantsUnder18Count || ''}
-                          onChange={e => set('dependantsUnder18Count', e.target.value)}
-                        />
-                      )}
-                    </div>
-                    <div>
-                      <p className="text-xs text-navy-500 font-body mb-2">Dependants over 18</p>
-                      <RadioGroup
-                        options={['No', 'Yes']}
-                        value={localData.dependantsOver18 !== undefined ? (localData.dependantsOver18 ? 'Yes' : 'No') : undefined}
-                        onChange={v => set('dependantsOver18', v === 'Yes')}
-                      />
-                      {localData.dependantsOver18 && (
-                        <input
-                          type="number" min="1" max="10"
-                          className="input-field mt-2"
-                          placeholder="How many?"
-                          value={localData.dependantsOver18Count || ''}
-                          onChange={e => set('dependantsOver18Count', e.target.value)}
-                        />
-                      )}
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-xs text-navy-500 font-body mb-2">Financial Dependency</p>
-                    <RadioGroup
-                      options={['Dependent', 'Not Dependent']}
-                      value={localData.financialDependency}
-                      onChange={v => set('financialDependency', v)}
-                    />
-                  </div>
                 </div>
               </div>
             </div>
@@ -640,7 +593,7 @@ export default function OnboardingPage() {
                 { label: 'Status', value: localData.currentStatus },
                 { label: 'Skills', value: (localData.skills || []).join(', ') || '—' },
                 { label: 'Career Direction', value: localData.preferredCareer || '—' },
-                { label: 'Prefers', value: localData.preferWorkOrStudy || '—' },
+                { label: 'Preferences', value: localData.preferWorkOrStudy || '—' },
                 { label: 'Financial Goal', value: localData.financialGoals || '—' },
                 { label: 'Risk Tolerance', value: `${localData.riskTolerance || 5}/10` },
                 { label: 'Work-Life Balance', value: `${localData.workLifeBalance || 5}/10` },
@@ -688,7 +641,7 @@ export default function OnboardingPage() {
 
       <div className="max-w-2xl mx-auto px-6 py-10">
         {/* Step indicators */}
-        <div className="flex items-center justify-between mb-10 overflow-x-auto pb-2">
+        <div className="flex items-center justify-between mb-10 overflow-x-auto pb-2" style={{ scrollbarWidth: 'none' }}>
           {STEPS.map((s, i) => {
             const Icon = s.icon
             const done = i < currentStep

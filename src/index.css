@@ -73,6 +73,16 @@
   background: #4f7ebc;
 }
 
+/* Hide scrollbar for step indicators */
+.overflow-x-auto::-webkit-scrollbar {
+  display: none;
+}
+
+.overflow-x-auto {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Animations */
 @keyframes fadeInUp {
   from {

@@ -42,21 +42,21 @@ export default function LandingPage() {
                 We guide you through data-backed insights and personalised recommendations, whether you stay local or move abroad.
               </p>
               <div className="flex flex-wrap gap-3 stagger-item">
-                <button onClick={() => navigate('/auth?mode=signup')} className="btn-gold flex items-center gap-2 text-base px-7 py-3.5 hover:animate-smooth-bounce">
+                <button onClick={() => navigate('/auth?mode=signup')} className="btn-gold flex items-center gap-2 text-base px-7 py-3.5">
                   Find My Path <ArrowRight size={18} />
                 </button>
                 <button onClick={() => navigate('/auth?mode=login')} className="btn-secondary text-base px-7 py-3.5">
                   Log In
                 </button>
               </div>
-              <p className="text-xs text-gray-400 mt-4 font-body">No credit card required · Takes about 10 minutes</p>
+              <p className="text-xs text-gray-400 mt-4 font-body">No credit card required. Takes about 10 minutes.</p>
             </div>
 
             {/* Right — visual card */}
             <div className="relative animate-side-slide">
               <div className="bg-navy-900 rounded-3xl p-8 text-white shadow-2xl hover:shadow-3xl transition-all duration-500 card-hover">
                 <div className="flex items-center gap-3 mb-6 animate-fade-in-down">
-                  <div className="w-10 h-10 rounded-full bg-gold-400 flex items-center justify-center font-bold font-display text-navy-900 animate-heartbeat">AI</div>
+                  <div className="w-10 h-10 rounded-full bg-gold-400 flex items-center justify-center font-bold font-display text-navy-900">AI</div>
                   <div>
                     <p className="font-semibold font-display text-sm">Your Top Pathways</p>
                     <p className="text-navy-300 text-xs font-body">Based on your profile</p>
@@ -64,11 +64,11 @@ export default function LandingPage() {
                 </div>
 
                 {[
-                  { rank: '01', label: 'Move Abroad', sub: 'Study + New Career · Germany', match: '94%', tag: 'Top Pick' },
-                  { rank: '02', label: 'Stay Local', sub: 'Current Career + Upskill · India', match: '87%', tag: 'Safe Path' },
-                  { rank: '03', label: 'Move Abroad', sub: 'New Career · Canada', match: '81%', tag: 'High Growth' },
+                  { rank: '01', label: 'Move Abroad', sub: 'Study and New Career, Germany', match: '94%', tag: 'Top Pick' },
+                  { rank: '02', label: 'Stay Local', sub: 'Current Career and Upskill, India', match: '87%', tag: 'Safe Path' },
+                  { rank: '03', label: 'Move Abroad', sub: 'New Career, Canada', match: '81%', tag: 'High Growth' },
                 ].map((p, i) => (
-                  <div key={i} className={`rounded-xl p-4 mb-3 flex items-center justify-between stagger-item transition-all duration-300 hover:scale-105 ${i === 0 ? 'bg-navy-700 border border-gold-400/30 animate-glow' : 'bg-navy-800 hover:bg-navy-700'}`} style={{ animationDelay: `${i * 0.1}s` }}>
+                  <div key={i} className={`rounded-xl p-4 mb-3 flex items-center justify-between stagger-item transition-all duration-300 hover:scale-105 ${i === 0 ? 'bg-navy-700 border border-gold-400/30' : 'bg-navy-800 hover:bg-navy-700'}`} style={{ animationDelay: `${i * 0.1}s` }}>
                     <div className="flex items-center gap-3">
                       <span className="text-xs font-bold font-display text-navy-400">#{p.rank}</span>
                       <div>
@@ -135,8 +135,8 @@ export default function LandingPage() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map(({ icon: Icon, title, desc }, idx) => (
-              <div key={title} className="step-card stagger-item text-center number-card hover:animate-smooth-bounce" style={{ animationDelay: `${idx * 0.1}s` }}>
-                <div className="w-12 h-12 bg-navy-50 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-smooth-bounce">
+              <div key={title} className="step-card stagger-item text-center number-card" style={{ animationDelay: `${idx * 0.1}s` }}>
+                <div className="w-12 h-12 bg-navy-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
                   <Icon size={22} className="text-navy-700" />
                 </div>
                 <h3 className="font-display font-semibold text-navy-900 mb-2">{title}</h3>
@@ -156,7 +156,7 @@ export default function LandingPage() {
           <p className="text-navy-300 text-lg mb-8 font-body animate-fade-in-up">Join thousands of students and professionals making confident life decisions.</p>
           <button
             onClick={() => navigate('/auth?mode=signup')}
-            className="btn-gold text-base px-8 py-4 inline-flex items-center gap-2 hover:scale-105 transition-transform animate-smooth-bounce"
+            className="btn-gold text-base px-8 py-4 inline-flex items-center gap-2 hover:scale-105 transition-transform"
           >
             Start Your Journey <ArrowRight size={18} />
           </button>
@@ -171,8 +171,9 @@ export default function LandingPage() {
           </div>
           <p className="text-xs text-gray-400 font-body">© 2026 GlobalPathways AI. All rights reserved.</p>
           <div className="flex gap-6">
-            <a href="#" className="text-xs text-gray-400 hover:text-navy-700 transition-colors font-body">Privacy</a>
-            <a href="#" className="text-xs text-gray-400 hover:text-navy-700 transition-colors font-body">Terms</a>
+            <a href="/legal/privacy" className="text-xs text-gray-400 hover:text-navy-700 transition-colors font-body">Privacy</a>
+            <a href="/legal/terms" className="text-xs text-gray-400 hover:text-navy-700 transition-colors font-body">Terms</a>
+            <a href="/legal/agreement" className="text-xs text-gray-400 hover:text-navy-700 transition-colors font-body">User Agreement</a>
             <a href="#" className="text-xs text-gray-400 hover:text-navy-700 transition-colors font-body">Contact</a>
           </div>
         </div>

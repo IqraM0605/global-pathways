@@ -36,7 +36,7 @@ const OPENINGS = [
         team: 'AI & Data',
         location: 'Remote',
         type: 'Full-time',
-        level: 'Mid–Senior',
+        level: 'Mid to Senior',
         description: 'Design and improve the AI models that power our career pathway recommendations. This role combines NLP, career data modelling, and LLM fine-tuning to deliver personalised, accurate results.',
         responsibilities: [
             'Build and fine-tune LLM-based recommendation models',
@@ -99,7 +99,7 @@ const OPENINGS = [
         team: 'Content & Research',
         location: 'Remote',
         type: 'Contract / Full-time',
-        level: 'Junior–Mid',
+        level: 'Junior to Mid',
         description: 'Keep our country data accurate and up-to-date. You\'ll research visa requirements, cost of living, job markets, and quality of life metrics to power the data behind GlobalPathways recommendations.',
         responsibilities: [
             'Research and maintain data on 50+ countries (visas, jobs, lifestyle)',
@@ -478,7 +478,7 @@ function EmployerPortal() {
                                 <div className="flex justify-between items-start">
                                     <div className="flex-1">
                                         <h3 className="font-display font-bold text-lg text-navy-900">{job.title}</h3>
-                                        <p className="text-sm text-navy-500 font-body mt-1">{job.company} · {job.location}</p>
+                                        <p className="text-sm text-navy-500 font-body mt-1">{job.company}, {job.location}</p>
                                         <div className="flex gap-2 mt-2">
                                             <span className="text-xs bg-gray-100 text-navy-600 px-2 py-0.5 rounded-full font-body">{job.type}</span>
                                             <span className="text-xs bg-gray-100 text-navy-600 px-2 py-0.5 rounded-full font-body">{job.level}</span>
@@ -489,7 +489,7 @@ function EmployerPortal() {
                                     </button>
                                 </div>
                                 <p className="text-xs text-gray-400 font-body mt-4">
-                                    Posted {new Date(job.postedDate).toLocaleDateString()} · {job.applications.length} applications
+                                    Posted {new Date(job.postedDate).toLocaleDateString()}, {job.applications.length} applications
                                 </p>
                             </div>
                         ))
@@ -651,7 +651,7 @@ export default function CareersPage() {
                             onClick={() => setMode(null)}
                             className="text-sm text-navy-600 hover:text-navy-800 flex items-center gap-2 mb-6 font-body transition-colors"
                         >
-                            ← Back to selection
+                            Back to selection
                         </button>
 
                         <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
@@ -702,7 +702,7 @@ export default function CareersPage() {
                             onClick={() => setMode(null)}
                             className="text-sm text-navy-600 hover:text-navy-800 flex items-center gap-2 font-body transition-colors"
                         >
-                            ← Back to selection
+                            Back to selection
                         </button>
                     </div>
                     <EmployerPortal />

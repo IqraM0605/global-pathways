@@ -1,12 +1,13 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { AppProvider, useApp } from './context/AppContext'   // 👈 add useApp here
+import { AppProvider, useApp } from './context/AppContext'
 import LandingPage from './pages/LandingPage'
 import AuthPage from './pages/AuthPage'
 import OnboardingPage from './pages/OnboardingPage'
 import DashboardPage from './pages/DashboardPage'
 import ResultsPage from './pages/ResultsPage'
 import CareersPage from "./pages/CareerPage"
+import LegalPage from "./pages/LegalPage"
 
 // 👇 Add this component
 function ProtectedRoute({ children }) {
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/results" element={<ResultsPage />} />
           <Route path="/careers" element={<CareersPage />} />
+          <Route path="/legal/:page" element={<LegalPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>

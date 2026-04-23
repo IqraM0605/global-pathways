@@ -73,9 +73,9 @@ function DashboardHome({ navigate, user, formData, setActivePage }) {
           </div>
           <div className="space-y-1">
             {[
-              { rank: 1, label: 'Move Abroad · Germany', sub: 'Study + New Career · Data Scientist', score: '94%', dot: 'bg-gold-400' },
-              { rank: 2, label: 'Stay Local · India', sub: 'Study + Current Career · Sr. Engineer', score: '87%', dot: 'bg-navy-400' },
-              { rank: 3, label: 'Move Abroad · Canada', sub: 'New Career · Product Manager', score: '81%', dot: 'bg-green-400' },
+              { rank: 1, label: 'Move Abroad — Germany', sub: 'Study and New Career, Data Scientist', score: '94%', dot: 'bg-gold-400' },
+              { rank: 2, label: 'Stay Local — India', sub: 'Study and Current Career, Sr. Engineer', score: '87%', dot: 'bg-navy-400' },
+              { rank: 3, label: 'Move Abroad — Canada', sub: 'New Career, Product Manager', score: '81%', dot: 'bg-green-400' },
             ].map(p => (
               <button key={p.rank} onClick={() => setActivePage('pathways')}
                 className="w-full flex items-center justify-between py-3 border-b border-gray-50 last:border-0 group hover:bg-gray-50 -mx-2 px-2 rounded-xl transition-all">
@@ -237,7 +237,7 @@ function MetricInfoButton({ label, value, info }) {
 }
 
 function AltCard({ alt, index, isOpen, onToggle }) {
-  const country = alt.split(' · ')[0]
+  const country = alt.split(', ')[0]
   const details = ALT_DETAILS[country]
   return (
     <div className={`rounded-xl border-2 transition-all duration-200 overflow-hidden
@@ -300,17 +300,17 @@ function PathwaysPage({ navigate }) {
       university: 'TU Munich', score: 94, tag: 'Top Pick', tagStyle: 'bg-gold-400/10 text-gold-600 border-gold-400/30',
       roi: '340%', npv: '₹1.2Cr', timeline: '2 years', cost: '₹18L',
       happiness: '8.2/10', safety: 'Very Safe', wlb: 'Excellent',
-      summary: 'Your Python and data analysis skills transfer directly. Germany\'s thriving tech scene, low tuition fees, and post-study work permit make this a high-ROI path.',
-      alts: ['Netherlands · Data Engineer · TU Delft · 89%', 'Canada · ML Engineer · UofT · 86%', 'Ireland · Data Analyst · UCD · 82%'],
+      summary: 'Your Python and data analysis skills transfer directly. Germany\'s thriving tech scene, low tuition fees, and post-study work permit make this a strong path.',
+      alts: ['Netherlands, Data Engineer, TU Delft, 89%', 'Canada, ML Engineer, UofT, 86%', 'Ireland, Data Analyst, UCD, 82%'],
       futurePath: null,
     },
     {
       rank: 2, category: 'Stay Local', country: 'India', role: 'Senior Software Engineer',
       university: 'IIT / Online', score: 87, tag: 'Safe Path', tagStyle: 'bg-navy-50 text-navy-700 border-navy-200',
-      roi: '210%', npv: '₹65L', timeline: '1–2 years', cost: '₹4L',
+      roi: '210%', npv: '₹65L', timeline: '1 to 2 years', cost: '₹4L',
       happiness: '6.4/10', safety: 'Moderate', wlb: 'Good',
-      summary: 'Upskill with a part-time Master\'s or certification while continuing current employment. Lower risk, steady career growth.',
-      alts: ['India · Product Manager · IIM · 83%', 'India · ML Engineer · Online · 80%', 'India · Tech Lead · No study · 77%'],
+      summary: 'Upskill with a part-time degree or certification while continuing current employment. Lower risk, steady career growth.',
+      alts: ['India, Product Manager, IIM, 83%', 'India, ML Engineer, Online, 80%', 'India, Tech Lead, No study needed, 77%'],
       futurePath: 'After 2 years, you would be well-positioned to move abroad, especially Canada or Germany, with enhanced credentials and savings.',
     },
     {
@@ -319,7 +319,7 @@ function PathwaysPage({ navigate }) {
       roi: '290%', npv: '₹95L', timeline: '1 year', cost: '₹8L',
       happiness: '7.6/10', safety: 'Very Safe', wlb: 'Very Good',
       summary: 'Your project management and communication skills qualify you for PM roles. Canada\'s Express Entry and tech-friendly immigration make this a direct transition.',
-      alts: ['Australia · Business Analyst · 78%', 'UK · Product Owner · 75%', 'Singapore · Scrum Master · 72%'],
+      alts: ['Australia, Business Analyst, 78%', 'UK, Product Owner, 75%', 'Singapore, Scrum Master, 72%'],
       futurePath: null,
     },
   ]
@@ -369,7 +369,7 @@ function PathwaysPage({ navigate }) {
 
               <button onClick={() => setExpanded(expanded === p.rank ? null : p.rank)}
                 className="text-xs font-semibold text-navy-600 hover:text-navy-900 transition-colors font-body">
-                {expanded === p.rank ? '▲ Hide details' : '▼ Show alternatives & details'}
+                {expanded === p.rank ? 'Hide details' : 'Show alternatives and details'}
               </button>
 
               {expanded === p.rank && (

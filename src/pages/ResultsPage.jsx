@@ -17,6 +17,7 @@ const PRIORITY_TOOLTIPS = {
   'Financial Goals (ROI / NPV)': 'Return on investment and net present value of each pathway.',
   'Staying in My Timeline': 'How well the path fits within your stated time availability.',
   'Staying in My Financial Budget': 'Whether the total cost stays within your financial constraints.',
+  'Lifestyle Preferences': 'Your selected lifestyle priorities such as safety, climate, work-life balance, and cultural fit.',
 }
 
 const METRIC_INFO = {
@@ -52,45 +53,47 @@ const METRIC_INFO = {
 
 const ALT_DETAILS = {
   'Netherlands': {
-    costOfLiving: '~₹1.1L/mo', avgSalary: '₹55–80L/yr', jobMarket: 'Very Strong',
-    visa: 'Highly Skilled Migrant', visaTime: '2–4 weeks', happinessIndex: '7.8/10',
-    description: 'The Netherlands has a booming tech sector centered in Amsterdam and Eindhoven. English is widely spoken and the country ranks among Europe\'s top destinations for international professionals.',
+    costOfLiving: '~₹1.1L/mo', avgSalary: '₹55-80L/yr', jobMarket: 'Very Strong',
+    visa: 'Highly Skilled Migrant', visaTime: '2-4 weeks', happinessIndex: '7.8/10',
+    description: 'The Netherlands has a booming tech sector centered in Amsterdam and Eindhoven. English is widely spoken, and the country ranks among Europe\'s top destinations for international professionals.',
   },
   'Canada': {
-    costOfLiving: '~₹1.3L/mo', avgSalary: '₹60–95L/yr', jobMarket: 'Strong',
-    visa: 'Express Entry / Study Permit', visaTime: '3–6 months', happinessIndex: '7.6/10',
+    costOfLiving: '~₹1.3L/mo', avgSalary: '₹60-95L/yr', jobMarket: 'Strong',
+    visa: 'Express Entry / Study Permit', visaTime: '3-6 months', happinessIndex: '7.6/10',
     description: 'Canada\'s Express Entry system is one of the most accessible skilled-worker immigration paths. Tech hubs in Toronto, Vancouver, and Montreal are actively hiring international talent.',
   },
   'Ireland': {
-    costOfLiving: '~₹1.2L/mo', avgSalary: '₹55–85L/yr', jobMarket: 'Strong',
-    visa: 'Critical Skills Work Permit', visaTime: '4–8 weeks', happinessIndex: '7.3/10',
+    costOfLiving: '~₹1.2L/mo', avgSalary: '₹55-85L/yr', jobMarket: 'Strong',
+    visa: 'Critical Skills Work Permit', visaTime: '4-8 weeks', happinessIndex: '7.3/10',
     description: 'Ireland is home to European HQs of Google, Meta, and Apple. English-speaking, EU-based, with a straightforward work permit process for tech professionals.',
   },
   'India': {
-    costOfLiving: '~₹35–60K/mo', avgSalary: '₹12–40L/yr', jobMarket: 'Competitive',
+    costOfLiving: '~₹35-60K/mo', avgSalary: '₹12-40L/yr', jobMarket: 'Competitive',
     visa: 'N/A (local)', visaTime: 'Immediate', happinessIndex: '4.4/10',
     description: 'India\'s domestic tech sector is growing rapidly with major hubs in Bengaluru, Hyderabad, and Pune. Staying local eliminates relocation risk and lets you build savings before any future move.',
   },
   'Australia': {
-    costOfLiving: '~₹1.4L/mo', avgSalary: '₹65–100L/yr', jobMarket: 'Strong',
-    visa: 'Skilled Independent (189)', visaTime: '6–12 months', happinessIndex: '7.3/10',
+    costOfLiving: '~₹1.4L/mo', avgSalary: '₹65-100L/yr', jobMarket: 'Strong',
+    visa: 'Skilled Independent (189)', visaTime: '6-12 months', happinessIndex: '7.3/10',
     description: 'Australia\'s points-based immigration rewards tech professionals. Sydney and Melbourne have thriving startup and enterprise tech scenes with strong demand for analytical roles.',
   },
   'UK': {
-    costOfLiving: '~₹1.5L/mo', avgSalary: '₹60–90L/yr', jobMarket: 'Strong',
-    visa: 'Skilled Worker Visa', visaTime: '3–8 weeks', happinessIndex: '7.1/10',
+    costOfLiving: '~₹1.5L/mo', avgSalary: '₹60-90L/yr', jobMarket: 'Strong',
+    visa: 'Skilled Worker Visa', visaTime: '3-8 weeks', happinessIndex: '7.1/10',
     description: 'London is one of Europe\'s top tech and fintech hubs. The UK Skilled Worker visa is employer-sponsored and relatively fast. Strong demand for product, engineering, and data roles.',
   },
   'Singapore': {
-    costOfLiving: '~₹1.6L/mo', avgSalary: '₹70–110L/yr', jobMarket: 'Very Strong',
-    visa: 'Employment Pass', visaTime: '3–8 weeks', happinessIndex: '6.8/10',
+    costOfLiving: '~₹1.6L/mo', avgSalary: '₹70-110L/yr', jobMarket: 'Very Strong',
+    visa: 'Employment Pass', visaTime: '3-8 weeks', happinessIndex: '6.8/10',
     description: 'Singapore is Asia\'s financial and tech capital. Low taxes, world-class infrastructure, and a multicultural environment make it a top destination for qualified candidates.',
   },
 }
 
+const categoryIcon = { 'Move Abroad': Globe, 'Stay Local': Home, 'Combination': Globe }
+
 const RESULTS = [
   {
-    rank: 1, category: 'Move Abroad', type: 'Study + New Career based on transferable skills',
+    rank: 1, category: 'Move Abroad', type: 'Study and New Career based on transferable skills',
     country: 'Germany', role: 'Data Scientist', university: 'TU Munich',
     matchScore: 94, tag: 'Top Pick', tagColor: 'gold',
     summary: 'Your Python and data analysis skills transfer directly. Germany\'s thriving tech scene, low tuition, and post-study work permit make this a high-ROI path.',
@@ -104,11 +107,28 @@ const RESULTS = [
     futurePath: null,
   },
   {
-    rank: 2, category: 'Stay Local', type: 'Study + Current Career',
+    rank: 2, category: 'Combination', type: 'Stay Local then Move Abroad',
+    country: 'India then Germany', role: 'Data Analyst to Data Scientist', university: 'Online then TU Munich',
+    matchScore: 91, tag: 'Best of Both', tagColor: 'green',
+    summary: 'Start by upskilling in India with online certifications while building savings. After 12-18 months, transition to Germany for a Master\'s with stronger credentials and financial stability.',
+    financials: { roi: '380%', npv: '₹1.4Cr', timeline: '2.5 years', cost: '₹12L' },
+    lifestyle: { happiness: 7.8, safety: 'Very Safe', wlb: 'Excellent' },
+    alternatives: [
+      { country: 'India to Canada', role: 'Analyst to ML Engineer', university: 'Coursera then UofT', match: '87%' },
+      { country: 'India to Netherlands', role: 'Analyst to Data Engineer', university: 'Online then TU/e', match: '84%' },
+      { country: 'India to Ireland', role: 'Analyst to Tech Lead', university: 'Certifications then TCD', match: '80%' },
+    ],
+    futurePath: {
+      advice: 'This pathway gives you the best of both worlds: low initial risk while building skills locally, then a strategic move abroad with better positioning.',
+      abroad: 'Full Relocation', abCountry: 'Germany / Canada',
+    },
+  },
+  {
+    rank: 3, category: 'Stay Local', type: 'Study while in Current Career',
     country: 'India', role: 'Senior Software Engineer', university: 'IIT / Online (Coursera)',
     matchScore: 87, tag: 'Safe Path', tagColor: 'navy',
     summary: 'Upskill with a part-time Master\'s or certification while continuing current employment. Lower risk, steady career growth, and strong domestic tech demand.',
-    financials: { roi: '210%', npv: '₹65L', timeline: '1–2 years', cost: '₹4L' },
+    financials: { roi: '210%', npv: '₹65L', timeline: '1-2 years', cost: '₹4L' },
     lifestyle: { happiness: 6.4, safety: 'Moderate', wlb: 'Good' },
     alternatives: [
       { country: 'India', role: 'Product Manager', university: 'IIM (Part-time)', match: '83%' },
@@ -121,7 +141,7 @@ const RESULTS = [
     },
   },
   {
-    rank: 3, category: 'Move Abroad', type: 'New Career based on transferable skills',
+    rank: 4, category: 'Move Abroad', type: 'New Career based on transferable skills',
     country: 'Canada', role: 'Product Manager', university: null,
     matchScore: 81, tag: 'High Growth', tagColor: 'green',
     summary: 'Your project management and communication skills qualify you for PM roles. Canada\'s Express Entry and tech-friendly immigration make this a direct transition.',
@@ -142,11 +162,26 @@ const tagStyles = {
   green: 'bg-green-50 text-green-700 border-green-200',
 }
 
-const categoryIcon = { 'Move Abroad': Globe, 'Stay Local': Home }
-
-function MetricCard({ label, value }) {
+function MetricCard({ label, value, position = 'center' }) {
   const [open, setOpen] = useState(false)
   const info = METRIC_INFO[label]
+
+  // Determine horizontal alignment of the popup to avoid clipping
+  const popupAlign =
+    position === 'left'
+      ? 'left-0'
+      : position === 'right'
+        ? 'right-0'
+        : 'left-1/2 -translate-x-1/2'
+
+  // Align the arrow caret to the card
+  const arrowAlign =
+    position === 'left'
+      ? 'left-4'
+      : position === 'right'
+        ? 'right-4'
+        : 'left-1/2 -translate-x-1/2'
+
   return (
     <div className="relative">
       <button
@@ -162,7 +197,7 @@ function MetricCard({ label, value }) {
         <p className={`font-display font-bold text-sm transition-colors ${open ? info.color : 'text-navy-900'}`}>{value}</p>
       </button>
       {open && (
-        <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 z-30 w-64 rounded-2xl border shadow-xl p-4 ${info.bg} ${info.border}`}>
+        <div className={`absolute top-full ${popupAlign} mt-2 z-50 w-72 rounded-2xl border shadow-xl p-4 ${info.bg} ${info.border}`}>
           <div className="flex items-start justify-between gap-2 mb-2">
             <p className={`text-xs font-bold font-display ${info.color}`}>{info.title}</p>
             <button onClick={(e) => { e.stopPropagation(); setOpen(false) }} className="text-gray-400 hover:text-gray-600 flex-shrink-0">
@@ -170,7 +205,7 @@ function MetricCard({ label, value }) {
             </button>
           </div>
           <p className="text-xs text-navy-600 font-body leading-relaxed">{info.description}</p>
-          <div className={`absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rotate-45 border-l border-t ${info.border} ${info.bg}`}></div>
+          <div className={`absolute -top-1.5 ${arrowAlign} w-3 h-3 rotate-45 border-l border-t ${info.border} ${info.bg}`}></div>
         </div>
       )}
     </div>
@@ -186,7 +221,7 @@ function AltCard({ alt, index, isOpen, onToggle }) {
         <div className="flex items-center gap-3">
           <span className="text-xs font-bold text-navy-400 font-display w-4">{index + 1}</span>
           <div>
-            <p className="text-sm font-semibold text-navy-800 font-body">{alt.role} · {alt.country}</p>
+            <p className="text-sm font-semibold text-navy-800 font-body">{alt.role} — {alt.country}</p>
             {alt.university && <p className="text-xs text-navy-400 font-body">{alt.university}</p>}
           </div>
         </div>
@@ -280,12 +315,12 @@ function PathwayCard({ result, isTop }) {
 
         <p className="text-sm text-navy-600 font-body leading-relaxed mb-3">{result.summary}</p>
 
-        <p className="text-xs text-navy-400 font-body mb-2">Tap any metric to understand what it means →</p>
+        <p className="text-xs text-navy-400 font-body mb-2">Tap any metric to understand what it means</p>
         <div className="grid grid-cols-4 gap-3 mb-4">
-          <MetricCard label="ROI" value={result.financials.roi} />
-          <MetricCard label="NPV" value={result.financials.npv} />
-          <MetricCard label="Timeline" value={result.financials.timeline} />
-          <MetricCard label="Cost" value={result.financials.cost} />
+          <MetricCard label="ROI" value={result.financials.roi} position="left" />
+          <MetricCard label="NPV" value={result.financials.npv} position="center" />
+          <MetricCard label="Timeline" value={result.financials.timeline} position="center" />
+          <MetricCard label="Cost" value={result.financials.cost} position="right" />
         </div>
 
         <button
@@ -337,7 +372,7 @@ function PathwayCard({ result, isTop }) {
                 <div className="flex items-center gap-2">
                   <ArrowRight size={12} className="text-gold-500" />
                   <span className="text-xs font-semibold text-navy-700 font-body">
-                    Recommended abroad path: <span className="text-gold-600">{result.futurePath.abroad} · {result.futurePath.abCountry}</span>
+                    Recommended abroad path: <span className="text-gold-600">{result.futurePath.abroad} in {result.futurePath.abCountry}</span>
                   </span>
                 </div>
               </div>
@@ -386,7 +421,7 @@ export default function ResultsPage() {
         <div className="grid grid-cols-3 gap-3 mb-8">
           <div className="card p-4 text-center">
             <p className="font-display font-black text-2xl text-navy-900 mb-0.5">8</p>
-            <p className="text-xs text-navy-500 font-body leading-relaxed">paths modelled across<br />local & abroad options</p>
+            <p className="text-xs text-navy-500 font-body leading-relaxed">paths modelled across<br />local and abroad options</p>
           </div>
           <div className="card p-4 text-center">
             <p className="font-display font-black text-2xl text-navy-900 mb-0.5">12+</p>
